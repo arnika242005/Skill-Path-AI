@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/layout/Navbar';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import OptionCard from '../components/assessment/OptionCard';
@@ -102,9 +101,7 @@ const Assessment = () => {
   }
 
   return (
-    <>
-      <Navbar />
-  
+    <>  
       <Container size="sm" className="assessment">
         <div className="assessment-intro">
           <h2>Let's find your best income path</h2>

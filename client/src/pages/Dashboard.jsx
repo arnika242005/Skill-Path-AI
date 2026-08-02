@@ -277,6 +277,22 @@ const Dashboard = () => {
           <div>
             <h2>{opportunity.title}</h2>
             <p>Your personalized roadmap to get started.</p>
+
+            {isAuthenticated && progressId && (
+  <div
+    style={{
+      marginTop: 10,
+      marginBottom: 20,
+      padding: "10px 14px",
+      background: "#EEF6FF",
+      borderRadius: 8,
+      fontSize: 14,
+      color: "#1E3A8A",
+    }}
+  >
+    Click on a completed step to mark it as done and track your progress.
+  </div>
+)}
           </div>
 
           <div
@@ -321,24 +337,67 @@ const Dashboard = () => {
           </p>
         )}
 
-        {!loading &&
-          !error &&
-          roadmapSteps.map((step, index) => (
-            <div
-              key={index}
-              onClick={progressId ? () => toggleStep(index) : undefined}
-              style={{
-                cursor: progressId ? "pointer" : "default",
-              }}       
-            >
-              <RoadmapStep
-                index={index + 1}
-                title={step.title}
-                description={step.description}
-                done={step.done}
-              />
-            </div>
-          ))}
+{!loading &&
+  !error &&
+  roadmapSteps.map((step, index) => (
+    <div
+      key={index}
+      onClick={() => {
+        if (!isAuthenticated) {
+          setShowAuthPrompt(true);
+          return;
+        }
+
+        if (progressId) {
+          toggleStep(index);
+        }
+      }}
+      style={{
+        cursor: isAuthenticated ? "pointer" : "default",
+      }}
+    >
+      <RoadmapStep
+        index={index + 1}
+        title={step.title}
+        description={
+          isAuthenticated
+            ? step.description
+            : null
+        }
+        done={step.done}
+      />
+    </div>
+  ))}
+
+{!loading &&
+  !error &&
+  !isAuthenticated &&
+  roadmapSteps.length > 0 && (
+    <div
+      style={{
+        marginTop: "32px",
+        padding: "24px",
+        border: "1px solid #ddd",
+        borderRadius: "12px",
+        textAlign: "center",
+        background: "#fafafa",
+      }}
+    >
+      <h3> Unlock Your Complete Roadmap</h3>
+
+      <p style={{ margin: "12px 0" }}>
+        Sign in to unlock detailed step descriptions,
+        save your roadmap, track your progress,
+        and download your roadmap as a PDF.
+      </p>
+
+      <Button
+        onClick={() => setShowAuthPrompt(true)}
+      >
+        Login / Sign Up
+      </Button>
+    </div>
+)}
 
       </Container>
 

@@ -98,17 +98,13 @@ const Dashboard = () => {
             roadmap: data.roadmap,
           })
         );
-
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-
   }, [progressId]);
 
   const handleSave = async () => {
-
     if (!isAuthenticated) {
-
       sessionStorage.setItem(
         'currentRoadmap',
         JSON.stringify({
@@ -132,7 +128,6 @@ const Dashboard = () => {
     setSaving(true);
 
     try {
-
       const data = await progressAPI.save({
         opportunity,
         roadmap: roadmapSteps,
@@ -140,17 +135,14 @@ const Dashboard = () => {
 
       setProgressId(data.progress._id);
       setSaved(true);
-
     } catch (err) {
       console.error(err);
     } finally {
       setSaving(false);
     }
-
   };
 
   const toggleStep = async (index) => {
-
     if (!progressId) return;
 
     const updated = [...roadmapSteps];
@@ -164,13 +156,10 @@ const Dashboard = () => {
       stepIndex: index,
       done: updated[index].done,
     });
-
   };
 
   const handleDownloadPDF = async () => {
-
     if (!isAuthenticated) {
-
       sessionStorage.setItem(
         'currentRoadmap',
         JSON.stringify({
@@ -192,7 +181,6 @@ const Dashboard = () => {
     }
 
     try {
-
       const blob =
         await pdfAPI.downloadRoadmap(
           opportunity.title,
@@ -214,11 +202,9 @@ const Dashboard = () => {
       link.remove();
 
       window.URL.revokeObjectURL(url);
-
     } catch (err) {
       console.error(err);
     }
-
   };
 
   if (!hasOpportunity) {
@@ -258,7 +244,6 @@ const Dashboard = () => {
               View Profile
             </Button>
           </div>
-
         </Container>
 
         <Footer />
@@ -271,28 +256,26 @@ const Dashboard = () => {
       <Navbar />
 
       <Container size="md" className="dashboard">
-
         <div className="dashboard-header">
-
           <div>
             <h2>{opportunity.title}</h2>
             <p>Your personalized roadmap to get started.</p>
 
             {isAuthenticated && progressId && (
-  <div
-    style={{
-      marginTop: 10,
-      marginBottom: 20,
-      padding: "10px 14px",
-      background: "#EEF6FF",
-      borderRadius: 8,
-      fontSize: 14,
-      color: "#1E3A8A",
-    }}
-  >
-    Click on a completed step to mark it as done and track your progress.
-  </div>
-)}
+              <div
+                style={{
+                  marginTop: 10,
+                  marginBottom: 20,
+                  padding: "10px 14px",
+                  background: "#EEF6FF",
+                  borderRadius: 8,
+                  fontSize: 14,
+                  color: "#1E3A8A",
+                }}
+              >
+                Click on a completed step to mark it as done and track your progress.
+              </div>
+            )}
           </div>
 
           <div
@@ -301,7 +284,6 @@ const Dashboard = () => {
               gap: 12,
             }}
           >
-
             <Button
               variant="outline"
               onClick={handleDownloadPDF}
@@ -322,9 +304,7 @@ const Dashboard = () => {
                   : 'Save Roadmap'}
               </Button>
             )}
-
           </div>
-
         </div>
 
         {loading && (
@@ -337,68 +317,67 @@ const Dashboard = () => {
           </p>
         )}
 
-{!loading &&
-  !error &&
-  roadmapSteps.map((step, index) => (
-    <div
-      key={index}
-      onClick={() => {
-        if (!isAuthenticated) {
-          setShowAuthPrompt(true);
-          return;
-        }
+        {!loading &&
+          !error &&
+          roadmapSteps.map((step, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                if (!isAuthenticated) {
+                  setShowAuthPrompt(true);
+                  return;
+                }
 
-        if (progressId) {
-          toggleStep(index);
-        }
-      }}
-      style={{
-        cursor: isAuthenticated ? "pointer" : "default",
-      }}
-    >
-      <RoadmapStep
-        index={index + 1}
-        title={step.title}
-        description={
-          isAuthenticated
-            ? step.description
-            : null
-        }
-        done={step.done}
-      />
-    </div>
-  ))}
+                if (progressId) {
+                  toggleStep(index);
+                }
+              }}
+              style={{
+                cursor: isAuthenticated ? "pointer" : "default",
+              }}
+            >
+              <RoadmapStep
+                index={index + 1}
+                title={step.title}
+                description={
+                  isAuthenticated
+                    ? step.description
+                    : null
+                }
+                done={step.done}
+              />
+            </div>
+          ))}
 
-{!loading &&
-  !error &&
-  !isAuthenticated &&
-  roadmapSteps.length > 0 && (
-    <div
-      style={{
-        marginTop: "32px",
-        padding: "24px",
-        border: "1px solid #ddd",
-        borderRadius: "12px",
-        textAlign: "center",
-        background: "#fafafa",
-      }}
-    >
-      <h3> Unlock Your Complete Roadmap</h3>
+        {!loading &&
+          !error &&
+          !isAuthenticated &&
+          roadmapSteps.length > 0 && (
+            <div
+              style={{
+                marginTop: "32px",
+                padding: "24px",
+                border: "1px solid #ddd",
+                borderRadius: "12px",
+                textAlign: "center",
+                background: "#fafafa",
+              }}
+            >
+              <h3> Unlock Your Complete Roadmap</h3>
 
-      <p style={{ margin: "12px 0" }}>
-        Sign in to unlock detailed step descriptions,
-        save your roadmap, track your progress,
-        and download your roadmap as a PDF.
-      </p>
+              <p style={{ margin: "12px 0" }}>
+                Sign in to unlock detailed step descriptions,
+                save your roadmap, track your progress,
+                and download your roadmap as a PDF.
+              </p>
 
-      <Button
-        onClick={() => setShowAuthPrompt(true)}
-      >
-        Login / Sign Up
-      </Button>
-    </div>
-)}
-
+              <Button
+                onClick={() => setShowAuthPrompt(true)}
+              >
+                Login / Sign Up
+              </Button>
+            </div>
+          )}
       </Container>
 
       <AuthPromptModal

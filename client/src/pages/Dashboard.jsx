@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import RoadmapStep from '../components/dashboard/RoadmapStep';
@@ -209,51 +207,31 @@ const Dashboard = () => {
 
   if (!hasOpportunity) {
     return (
-      <>
-        <Navbar />
-
-        <Container
-          size="md"
-          style={{
-            padding: '64px 24px',
-            textAlign: 'center',
-          }}
-        >
-          <h2>No roadmap selected</h2>
-
-          <p style={{ marginBottom: 24 }}>
-            Take the assessment to generate your roadmap.
-          </p>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 12,
-            }}
-          >
-            <Button as={Link} to="/assessment">
-              Take Assessment
-            </Button>
-
-            <Button
-              variant="outline"
-              as={Link}
-              to="/profile"
-            >
-              View Profile
-            </Button>
-          </div>
-        </Container>
-
-        <Footer />
-      </>
+      <Container
+        size="md"
+        className="dashboard-empty"
+      >
+        <h1>No Roadmap Yet</h1>
+  
+        <p>
+          Take the assessment to generate your personalized roadmap.
+        </p>
+  
+        <div className="dashboard-empty-actions">
+          <Button as={Link} to="/assessment">
+            Take Assessment
+          </Button>
+  
+          <Button variant="outline" as={Link} to="/profile">
+            View Profile
+          </Button>
+        </div>
+      </Container>
     );
   }
 
   return (
     <>
-      <Navbar />
 
       <Container size="md" className="dashboard">
         <div className="dashboard-header">
@@ -384,8 +362,6 @@ const Dashboard = () => {
         open={showAuthPrompt}
         onClose={() => setShowAuthPrompt(false)}
       />
-
-      <Footer />
     </>
   );
 };

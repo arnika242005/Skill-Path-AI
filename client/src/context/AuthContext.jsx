@@ -17,8 +17,17 @@ export const AuthProvider = ({ children }) => {
   const login = (userData) => setUser(userData);
 
   const logout = async () => {
-    await authAPI.logout();
+    try {
+      await authAPI.logout();
+    } catch (err) {
+      console.error(err);
+    }
+  
     setUser(null);
+  
+    sessionStorage.removeItem("currentRoadmap");
+    sessionStorage.removeItem("pendingAction");
+  
   };
 
   return (

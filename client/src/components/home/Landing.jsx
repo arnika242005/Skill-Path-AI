@@ -15,7 +15,7 @@ const Landing = () => {
             business or income path in minutes — matched to your skills, budget, and goals.
           </p>
           <Button size="lg" onClick={() => navigate('/assessment')}>
-            Start Discovering →
+            Start Discovering
           </Button>
         </div>
         <div className="landing-image">

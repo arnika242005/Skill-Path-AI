@@ -14,7 +14,7 @@ const callAI = async (prompt) => {
         content: prompt,
       },
     ],
-    temperature: 0.8,
+    temperature: 0.7,
   });
 
   return response.choices[0].message.content
@@ -23,142 +23,155 @@ const callAI = async (prompt) => {
 };
 
 const getRecommendations = async (answers) => {
-  const prompt = `
-You are an expert career advisor and business mentor.
+const prompt = `
+You are an expert career advisor, entrepreneur mentor and opportunity matching AI.
 
-Based on the user's profile below, recommend EXACTLY 5 realistic income opportunities or small businesses.
+Your job is to recommend EXACTLY 5 realistic income opportunities
+or small business paths based on the user's profile.
 
 USER PROFILE
 
 Age Group: ${answers.ageGroup}
 Current Status: ${answers.currentStatus}
 Interests: ${(answers.interests || []).join(", ")}
-Skills: ${(answers.skills || []).join(", ")}
+Current Skills: ${(answers.skills || []).join(", ")}
 Experience Level: ${answers.experience}
-Budget: ${answers.budget}
+Available Daily Time: ${answers.availableTime}
+Income Goal: ${answers.incomeGoal}
+Initial Investment Budget: ${answers.budget}
 Work Preference: ${answers.workPreference}
 Work Mode: ${answers.workMode}
-Income Goal: ${answers.incomeGoal}
-Risk Tolerance: ${answers.riskLevel}
+Risk Level: ${answers.riskLevel}
 Personality: ${answers.personality}
-Resources: ${(answers.resources || []).join(", ")}
+Available Resources: ${(answers.resources || []).join(", ")}
 
-INSTRUCTIONS
+IMPORTANT MATCHING RULES:
 
-1. Return EXACTLY 5 opportunities.
-2. Rank from BEST fit to LOWEST fit.
-3. Use realistic opportunities.
-4. Don't repeat similar ideas.
-5. Explain WHY each opportunity suits THIS user.
-6. Mention the user's actual interests, skills, experience, budget or goal.
-7. Give realistic startup costs.
-8. Give realistic monthly earning potential.
+1. Recommend opportunities suitable for THIS exact person.
+2. Consider their: skills, experience, budget, available time, personality, resources.
+3. If user is beginner/student: prefer low-cost opportunities, avoid unrealistic businesses, suggest skill-based income paths
+4. If budget is ₹0:
+   - don't recommend businesses requiring investment.
+5. If user selected Online:
+   - prioritize online opportunities.
+6. If user selected Independent:
+   - prefer freelancing, solo work, digital businesses.
+7. If user selected Team:
+   - suggest collaboration-based opportunities.
+8. Do not repeat similar opportunities.
+9. Rank from strongest match to weakest match.
 
-MATCH SCORE RULES
-
-- Best fit: 92-98
-- Very Good: 85-91
-- Good: 75-84
-- Average: 65-74
-- Weak: 50-64
-
-IMPORTANT
-
-- Every matchScore MUST be different.
-- Do NOT use the same score twice.
-- Higher ranked opportunity MUST have higher score.
-- Return ONLY VALID JSON.
-- No markdown.
-- No explanation.
-
+MATCH SCORE:
+Best match: 92-98
+Very good: 85-91
+Good: 75-84
+Average: 65-74
+Rules:
+- Every score must be unique.
+- Higher ranking must have higher score.
+Return ONLY JSON.
 Format:
 
 [
-  {
-    "title":"",
-    "category":"",
-    "matchScore":95,
-    "why":"",
-    "startupCost":"",
-    "earningPotential":""
-  }
+ {
+  "title":"",
+  "category":"",
+  "matchScore":95,
+  "why":"",
+  "startupCost":"",
+  "earningPotential":""
+ }
 ]
 `;
 
-  const text = await callAI(prompt);
+const text = await callAI(prompt);
 
-  let recommendations = JSON.parse(text);
+let recommendations;
+try {
+  recommendations = JSON.parse(text);
+}
+catch(err){
+  throw new Error("AI returned invalid JSON");
+}
 
-  if (!Array.isArray(recommendations)) {
-    throw new Error("AI did not return an array.");
-  }
+if(!Array.isArray(recommendations)){
+  throw new Error("AI response is not an array");
+}
 
-  recommendations = recommendations.slice(0, 5);
-
-  return recommendations.map((item, index) => ({
-    id: index + 1,
-    title: item.title,
-    category: item.category,
-    matchScore: Number(item.matchScore),
-    why: item.why,
-    startupCost: item.startupCost,
-    earningPotential: item.earningPotential,
-  }));
+return recommendations.slice(0,5).map((item,index)=>({
+id:index+1,
+title:item.title,
+category:item.category,
+matchScore:Number(item.matchScore),
+why:item.why,
+startupCost:item.startupCost,
+earningPotential:item.earningPotential
+}));
 };
 
-const generateRoadmap = async (answers, opportunity) => {
-  const prompt = `
+const generateRoadmap = async (answers, opportunity)=>{
+const prompt = `
 You are an expert mentor.
+Create a personalized action roadmap for:
 
-Create a PERSONALIZED roadmap for:
+${opportunity.title}
 
-"${opportunity.title}"
 
 USER PROFILE
 
 Current Status: ${answers.currentStatus}
 Experience: ${answers.experience}
+Available Time: ${answers.availableTime}
 Budget: ${answers.budget}
 Skills: ${(answers.skills || []).join(", ")}
 Interests: ${(answers.interests || []).join(", ")}
 Resources: ${(answers.resources || []).join(", ")}
 Income Goal: ${answers.incomeGoal}
-Risk Tolerance: ${answers.riskLevel}
+Risk Level: ${answers.riskLevel}
 Personality: ${answers.personality}
 
 RULES
 
-1. Return 5-6 actionable steps.
-2. Every step must reference the user's profile.
-3. Mention their existing skills whenever possible.
-4. Mention their budget where relevant.
-5. Avoid generic advice.
-6. Keep descriptions concise.
+1. Create 5-6 practical steps.
+2. Steps should match:
+- user's experience level
+- available time
+- budget
+- skills
+3. Avoid generic advice.
+4. Mention user's existing skills where possible.
+5. For beginners: start with learning + portfolio + first earning steps.
+6. For freelancers: include finding clients and creating proof of work.
+7. For business ideas: include validation before investment.
+8. Keep descriptions short and actionable.
 
-Return ONLY VALID JSON.
+Return ONLY JSON.
 
-Example:
-
+Format:
 [
-  {
+ {
     "title":"Learn the Market",
     "description":"Use your content writing skills to research..."
-  }
+ }
 ]
 `;
+const text = await callAI(prompt);
+let roadmap;
+try{
+ roadmap = JSON.parse(text);
+}
+catch(err){
+ throw new Error("AI returned invalid roadmap JSON");
+}
 
-  const text = await callAI(prompt);
+if(!Array.isArray(roadmap)){
+ throw new Error("Invalid roadmap format");
+}
 
-  const roadmap = JSON.parse(text);
-
-  if (!Array.isArray(roadmap)) {
-    throw new Error("AI did not return a valid roadmap.");
-  }
-
-  return roadmap;
+return roadmap;
 };
 
 module.exports = {
-  getRecommendations,
-  generateRoadmap,
+ getRecommendations,
+ generateRoadmap,
 };

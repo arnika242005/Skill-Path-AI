@@ -1,10 +1,22 @@
 import Section from '../ui/Section';
 
 const points = [
-  { title: 'Personalized matches', desc: 'Suggestions based on your unique profile.' },
-  { title: 'Realistic opportunities', desc: 'Actually doable paths, not generic advice.' },
-  { title: 'Actionable roadmap', desc: 'Clear next steps, not vague suggestions.' },
-  { title: 'Progress tracking', desc: 'Track your growth over time.' },
+  {
+    title: "AI-Powered Recommendations",
+    desc: "Receive personalized income opportunities based on your skills, interests, and goals."
+  },
+  {
+    title: "Actionable Roadmaps",
+    desc: "Follow a step-by-step plan that helps you start earning with confidence."
+  },
+  {
+    title: "Progress Tracking",
+    desc: "Save your roadmap, mark completed milestones, and monitor your growth."
+  },
+  {
+    title: "Beginner Friendly",
+    desc: "Whether you're a student or professional, discover opportunities that match your experience level."
+  },
 ];
 
 const WhyChooseUs = () => {

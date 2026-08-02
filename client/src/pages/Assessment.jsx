@@ -11,26 +11,28 @@ const questions = [
     options: ['Under 18', '18-24', '25-34', '35-44', '45+'] },
   { key: 'currentStatus', title: 'What are you currently?', type: 'single',
     options: ['Student', 'Working Professional', 'Freelancer', 'Homemaker', 'Business Owner', 'Looking for Work'] },
-  { key: 'interests', title: 'What are your interests?', type: 'multi',
-    options: ['Design', 'Writing', 'Photography', 'Videography', 'Teaching', 'Marketing', 'Social Media', 'Other'] },
-  { key: 'skills', title: 'What skills do you already have?', type: 'multi',
-    options: ['Video Editing', 'Content Writing', 'Excel', 'Teaching', 'MS Office', 'Design', 'Coding', 'Other'] },
-  { key: 'experience', title: 'Rate your overall experience', type: 'single',
-    options: ['Beginner', 'Intermediate', 'Advanced'] },
+  { key: 'interests', title: 'What type of work interests you?', type: 'multi',
+    options: ['Creative Work', 'Technology', 'Teaching & Training', 'Writing & Communication', 'Social Work', 'Marketing & Sales', 'Business & Entrepreneurship', 'Photography & Media', 'Other'] },
+  { key: 'skills', title: 'What skills do you currently have?', type: 'multi',
+    options: ['Coding', 'Content Writing', 'Design', 'Video Editing', 'MS Tools', 'Communication', 'Teaching', 'Cooking', 'Other'] },
+  { key: 'experience', title: 'How would you rate your experience level?', type: 'single',
+    options: ['Complete Beginner', 'Some Experience', 'Intermediate', 'Advanced'] },
+  { key: 'availableTime', title: 'How much time can you spend daily?', type: 'single',
+    options: ['Less than 1 hour', '1-3 hours', '3-5 hours', '5+ hours'] },
+  { key: 'incomeGoal', title: 'What brings you here today?', type: 'single',
+    options: ['Side Income', 'Full-time Career', 'Freelancing', 'Passive Income', 'Extra Pocket Money', 'Explore Opportunities'] },
   { key: 'budget', title: 'How much money can you invest initially?', type: 'single',
     options: ['₹0', '₹1 - 500', '₹500 - 2000', '₹2000 - 5000', '₹5000 - 10000', '₹10000+'] },
   { key: 'workPreference', title: 'How do you prefer working?', type: 'single',
-    options: ['Alone', 'Team', "Doesn't matter"] },
+    options: ['Independently', 'With a Team', "Both"] },
   { key: 'workMode', title: 'Online or offline work?', type: 'single',
-    options: ['Online', 'Offline', 'Both'] },
-  { key: 'incomeGoal', title: 'What brings you here today?', type: 'single',
-    options: ['Side Income', 'Full-time Business', 'Freelancing', 'Passive Income', 'Extra Pocket Money', 'Career Change', 'Just Exploring'] },
+    options: ['Online', 'Offline', 'Hybrid'] },
   { key: 'riskLevel', title: 'How much risk are you comfortable with?', type: 'single',
     options: ['Low', 'Medium', 'High'] },
-  { key: 'personality', title: 'Which describes you best?', type: 'single',
-    options: ['Creative', 'Analytical', 'Social', 'Independent', 'Leader'] },
-  { key: 'resources', title: 'Which of these do you have?', type: 'multi',
-    options: ['Laptop', 'Desktop', 'Smartphone', 'Internet Connection', 'Camera', 'Vehicle', 'Workspace'] },
+  { key: 'personality', title: 'Which describes your working style?', type: 'single',
+    options: ['Creative Thinker', 'Problem Solver', 'Socially Active', 'Independent', 'Leader'] },
+  { key: 'resources', title: 'Which resources do you have?', type: 'multi',
+    options: ['Laptop', 'Existing Social Media Audience', 'Smartphone', 'Internet Connection', 'Camera', 'Vehicle', 'Workspace'] },
 ];
 
 const Assessment = () => {
@@ -59,7 +61,29 @@ const Assessment = () => {
     });
   };
 
+  const isFormComplete = () => {
+    return questions.every((question) => {
+      const answer = answers[question.key];
+  
+      if (question.type === "multi") {
+        if (!answer || answer.length === 0) return false;
+  
+        if (
+          answer.includes("Other") &&
+          !customInputs[question.key]?.trim()
+        ) {
+          return false;
+        }
+  
+        return true;
+      }
+  
+      return !!answer;
+    });
+  };
+  
   const handleSubmit = () => {
+    if (!isFormComplete()) return;
     setAnalyzing(true);
   };
 
@@ -153,7 +177,9 @@ const Assessment = () => {
           ))}
   
           <div className="assessment-submit">
-            <Button onClick={handleSubmit}>
+            <Button 
+            onClick={handleSubmit}
+            disabled={!isFormComplete()}>
               Analyze My Profile
             </Button>
           </div>

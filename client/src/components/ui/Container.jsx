@@ -1,5 +1,17 @@
-const Container = ({ children, size = 'lg', className = '' }) => {
-  return <div className={`container container-${size} ${className}`}>{children}</div>;
+const Container = ({
+  children,
+  size = "lg",
+  className = "",
+  style = {},
+}) => {
+  return (
+    <div
+      className={`container container-${size} ${className}`}
+      style={style}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default Container;

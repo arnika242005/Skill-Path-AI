@@ -30,10 +30,8 @@ const Footer = () => {
 
           <div>
             <h4>Resources</h4>
-
-            <a href="#how-it-works">How it Works</a>
-            <a href="#features">Features</a>
-            <a href="#faq">FAQs</a>
+              <Link to="/features">Features</Link>
+              <Link to="/faqs">FAQs</Link>
           </div>
 
         </div>

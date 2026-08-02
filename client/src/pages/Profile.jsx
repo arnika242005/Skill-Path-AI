@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import StatCard from '../components/profile/StatCard';
@@ -10,22 +8,54 @@ import { useAuth } from '../context/AuthContext';
 import { userAPI } from '../services/api';
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [roadmaps, setRoadmaps] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    userAPI.getSavedRoadmaps()
+    if (!isAuthenticated) {
+      setLoading(false);
+      return;
+    }
+  
+    userAPI
+      .getSavedRoadmaps()
       .then((data) => setRoadmaps(data.roadmaps))
       .finally(() => setLoading(false));
-  }, []);
+  }, [isAuthenticated]);
 
   const handleLogout = async () => {
     await logout();
     navigate('/');
   };
 
+  if (!isAuthenticated) {
+    return (
+      <Container
+        size="md"
+        style={{
+          minHeight: "70vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <h2>Login Required</h2>
+  
+        <p style={{ margin: "16px 0 28px" }}>
+          Please log in to view your profile, saved roadmaps, and progress.
+        </p>
+  
+        <Button onClick={() => navigate("/login")}>
+          Login
+        </Button>
+      </Container>
+    );
+  }
+  
   const avgProgress = roadmaps.length
     ? Math.round(
         roadmaps.reduce((sum, r) => sum + (r.completedSteps / (r.roadmap.length || 1)) * 100, 0) / roadmaps.length
@@ -34,7 +64,6 @@ const Profile = () => {
 
   return (
     <>
-      <Navbar />
       <Container size="md" className="profile">
         <div className="profile-header">
           <div className="profile-avatar">{user?.name?.[0]?.toUpperCase() || 'U'}</div>
@@ -79,7 +108,6 @@ const Profile = () => {
   />
 ))}
       </Container>
-      <Footer />
     </>
   );
 };

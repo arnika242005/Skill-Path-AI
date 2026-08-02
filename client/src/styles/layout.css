@@ -1,4 +1,4 @@
-/* ===== Navbar ===== */
+/* Navbar */
 .navbar { position: sticky; top: 0; z-index: 100; background: var(--color-bg); border-bottom: 1px solid var(--color-neutral-200); }
 .navbar-inner { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
 .navbar-logo { font-family: var(--font-heading); font-weight: 700; font-size: 22px; color: var(--color-text); }
@@ -21,7 +21,7 @@
   .navbar-toggle { display: block; }
 }
 
-/* ===== Footer ===== */
+/* Footer */
 .footer { background: var(--color-primary-900); color: var(--color-neutral-300); padding: 64px 24px 24px; }
 .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
 .footer-brand p { color: var(--color-secondary-500); margin-top: 8px; max-width: 260px; }

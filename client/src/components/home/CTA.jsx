@@ -10,7 +10,7 @@ const CTA = () => {
       <h2>Ready to find your income path?</h2>
       <p>Answer a few quick questions and get a personalized roadmap in minutes.</p>
       <Button size="lg" variant="secondary" onClick={() => navigate('/assessment')}>
-        Start Discovery →
+        Start Discovery
       </Button>
     </Section>
   );

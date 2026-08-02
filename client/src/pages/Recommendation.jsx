@@ -4,6 +4,7 @@ import Footer from '../components/layout/Footer';
 import Container from '../components/ui/Container';
 import ProfileSummary from '../components/recommendation/ProfileSummary';
 import OpportunityCard from '../components/recommendation/OpportunityCard';
+import { recommendationAPI } from "../services/api";
 
 const Recommendation = () => {
   const location = useLocation();

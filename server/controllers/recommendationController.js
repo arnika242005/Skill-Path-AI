@@ -1,49 +1,28 @@
-const Opportunity = require('../models/Opportunity');
-const Assessment = require('../models/Assessment');
+const { generateRoadmap } = require('../services/aiService');
 
 const getRoadmap = async (req, res) => {
   try {
-    const { opportunityId, assessmentId } = req.body;
+    const { opportunity, answers } = req.body;
 
-    const opportunity = await Opportunity.findById(opportunityId);
-
-    if (!opportunity) {
-      return res.status(404).json({
-        message: 'Opportunity not found'
-      });
-    }
-
-    let answers = req.body.answers;
-
-    if (!answers && assessmentId) {
-      const assessment = await Assessment.findById(assessmentId);
-      answers = assessment?.answers;
-    }
-
-    if (!answers) {
+    if (!opportunity || !answers) {
       return res.status(400).json({
-        message: 'Missing answers'
+        message: 'Opportunity and answers are required',
       });
     }
 
-    // roadmap directly from MongoDB
-    const roadmap = opportunity.roadmap || [];
+    // Generate roadmap directly from AI
+    const roadmap = await generateRoadmap(answers, opportunity);
 
     res.json({
-      opportunity: {
-        id: opportunity._id,
-        title: opportunity.title
-      },
-      roadmap
+      opportunity,
+      roadmap,
     });
-
   } catch (err) {
+    console.error(err);
     res.status(500).json({
-      message: err.message
+      message: err.message,
     });
   }
 };
 
-module.exports = {
-  getRoadmap
-};
+module.exports = { getRoadmap };

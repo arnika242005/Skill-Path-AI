@@ -14,7 +14,7 @@ const callAI = async (prompt) => {
         content: prompt,
       },
     ],
-    temperature: 0.7,
+    temperature: 0.8,
   });
 
   return response.choices[0].message.content
@@ -24,80 +24,138 @@ const callAI = async (prompt) => {
 
 const getRecommendations = async (answers) => {
   const prompt = `
-You are an expert career advisor.
+You are an expert career advisor and business mentor.
 
-Based on this profile:
+Based on the user's profile below, recommend EXACTLY 5 realistic income opportunities or small businesses.
 
-Age: ${answers.ageGroup}
-Status: ${answers.currentStatus}
+USER PROFILE
+
+Age Group: ${answers.ageGroup}
+Current Status: ${answers.currentStatus}
 Interests: ${(answers.interests || []).join(", ")}
 Skills: ${(answers.skills || []).join(", ")}
-Experience: ${answers.experience}
+Experience Level: ${answers.experience}
 Budget: ${answers.budget}
 Work Preference: ${answers.workPreference}
 Work Mode: ${answers.workMode}
 Income Goal: ${answers.incomeGoal}
-Risk: ${answers.riskLevel}
+Risk Tolerance: ${answers.riskLevel}
 Personality: ${answers.personality}
 Resources: ${(answers.resources || []).join(", ")}
 
-Return ONLY valid JSON.
+INSTRUCTIONS
 
-Return an array of exactly 5 opportunities.
+1. Return EXACTLY 5 opportunities.
+2. Rank from BEST fit to LOWEST fit.
+3. Use realistic opportunities.
+4. Don't repeat similar ideas.
+5. Explain WHY each opportunity suits THIS user.
+6. Mention the user's actual interests, skills, experience, budget or goal.
+7. Give realistic startup costs.
+8. Give realistic monthly earning potential.
 
-Each object must contain:
+MATCH SCORE RULES
 
-{
-"title":"",
-"category":"",
-"matchScore":90,
-"why":"",
-"startupCost":"",
-"earningPotential":""
-}
-`;
+- Best fit: 92-98
+- Very Good: 85-91
+- Good: 75-84
+- Average: 65-74
+- Weak: 50-64
 
-  const text = await callAI(prompt);
-  const recommendations = JSON.parse(text);
+IMPORTANT
 
-  return recommendations.map((r, index) => ({
-    id: index + 1,
-    ...r,
-  }));
-};
+- Every matchScore MUST be different.
+- Do NOT use the same score twice.
+- Higher ranked opportunity MUST have higher score.
+- Return ONLY VALID JSON.
+- No markdown.
+- No explanation.
 
-const generateRoadmap = async (answers, opportunity) => {
-  const prompt = `
-Create a personalized roadmap for
-
-"${opportunity.title}"
-
-User profile:
-
-Status: ${answers.currentStatus}
-Experience: ${answers.experience}
-Budget: ${answers.budget}
-Skills: ${(answers.skills || []).join(", ")}
-Interests: ${(answers.interests || []).join(", ")}
-Resources: ${(answers.resources || []).join(", ")}
-Goal: ${answers.incomeGoal}
-Risk: ${answers.riskLevel}
-
-Return ONLY JSON.
-
-Example:
+Format:
 
 [
-{
-"title":"Step 1",
-"description":"..."
-}
+  {
+    "title":"",
+    "category":"",
+    "matchScore":95,
+    "why":"",
+    "startupCost":"",
+    "earningPotential":""
+  }
 ]
 `;
 
   const text = await callAI(prompt);
 
-  return JSON.parse(text);
+  let recommendations = JSON.parse(text);
+
+  if (!Array.isArray(recommendations)) {
+    throw new Error("AI did not return an array.");
+  }
+
+  recommendations = recommendations.slice(0, 5);
+
+  return recommendations.map((item, index) => ({
+    id: index + 1,
+    title: item.title,
+    category: item.category,
+    matchScore: Number(item.matchScore),
+    why: item.why,
+    startupCost: item.startupCost,
+    earningPotential: item.earningPotential,
+  }));
+};
+
+const generateRoadmap = async (answers, opportunity) => {
+  const prompt = `
+You are an expert mentor.
+
+Create a PERSONALIZED roadmap for:
+
+"${opportunity.title}"
+
+USER PROFILE
+
+Current Status: ${answers.currentStatus}
+Experience: ${answers.experience}
+Budget: ${answers.budget}
+Skills: ${(answers.skills || []).join(", ")}
+Interests: ${(answers.interests || []).join(", ")}
+Resources: ${(answers.resources || []).join(", ")}
+Income Goal: ${answers.incomeGoal}
+Risk Tolerance: ${answers.riskLevel}
+Personality: ${answers.personality}
+
+RULES
+
+1. Return 5-6 actionable steps.
+2. Every step must reference the user's profile.
+3. Mention their existing skills whenever possible.
+4. Mention their budget where relevant.
+5. Avoid generic advice.
+6. Keep descriptions concise.
+
+Return ONLY VALID JSON.
+
+Example:
+
+[
+  {
+    "title":"Learn the Market",
+    "description":"Use your content writing skills to research..."
+  }
+]
+`;
+
+  const text = await callAI(prompt);
+
+  const roadmap = JSON.parse(text);
+
+  if (!Array.isArray(roadmap)) {
+    throw new Error("AI did not return a valid roadmap.");
+  }
+
+  return roadmap;
 };
 
 module.exports = {

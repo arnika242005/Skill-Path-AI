@@ -34,9 +34,11 @@ const saveRoadmap = async (req, res) => {
 
       opportunity: {
         title: opportunity.title,
-        description: opportunity.description,
+        category: opportunity.category,
         why: opportunity.why,
         matchScore: opportunity.matchScore,
+        startupCost: opportunity.startupCost,
+        earningPotential: opportunity.earningPotential,
       },
 
       roadmap: roadmap.map((step) => ({

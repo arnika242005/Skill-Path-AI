@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import StatCard from '../components/profile/StatCard';
-import SavedRoadmap from '../components/profile/SavedRoadmap';
+import SavedRoadmap from '../components/profile/SavedRoadMap';
 import { useAuth } from '../context/AuthContext';
 import { userAPI } from '../services/api';
 

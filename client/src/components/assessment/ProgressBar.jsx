@@ -1,12 +1,21 @@
 const ProgressBar = ({ current, total }) => {
-  const percent = Math.round((current / total) * 100);
+  const percent = Math.min(100, Math.max(0, Math.round((current / total) * 100)));
 
   return (
-    <div className="progress-wrap">
-      <div className="progress-bar">
-        <div className="progress-fill" style={{ width: `${percent}%` }} />
+    <div className="assessment-progress-wrapper">
+      <div className="progress-meta">
+        <span className="progress-step-indicator">
+          Step {current} <span className="text-muted">of {total}</span>
+        </span>
+        <span className="progress-percentage">{percent}% completed</span>
       </div>
-      <span className="progress-label">Question {current} of {total}</span>
+
+      <div className="progress-track" role="progressbar" aria-valuenow={percent} aria-valuemin="0" aria-valuemax="100">
+        <div
+          className="progress-fluid-fill"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
     </div>
   );
 };

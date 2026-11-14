@@ -1,0 +1,17 @@
+{
+  "name": "skill-path-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SkillPath AI - Career & Income Path Engine",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev:client": "npm run dev --workspace=client",
+    "dev:server": "npm run dev --workspace=server",
+    "build:client": "npm run build --workspace=client",
+    "install:all": "npm install"
+  }
+}
+

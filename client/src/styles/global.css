@@ -1,104 +1,232 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
+/* ==========================================================================
+   SKILLPATH AI — HIGH-END EDITORIAL & PASTEL DESIGN SYSTEM
+   Curated according to high-end-visual-design & design-taste-frontend
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap');
 
 :root {
-  /* Primary */
-  --color-primary-900: #130F30;
-  --color-primary-800: #261F60;
-  --color-primary-700: #3B2F8A;
-  --color-primary-600: #5348C4;
-  --color-primary-500: #6C5CE7;
-  --color-primary-400: #8B7CF6;
-  --color-primary-300: #A89DF8;
-  --color-primary-200: #C8C0FB;
-  --color-primary-100: #E0DCFD;
-  --color-primary-50:  #F3F1FE;
+  /* Surfaces & Canvas (Porcelain, Warm Chalk, Crisp White) */
+  --bg-canvas: #FAF8F5;
+  --bg-surface: #FFFFFF;
+  --bg-chalk: #F4F1EC;
+  --bg-sand: #F7F5F0;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --bg-glass-strong: rgba(250, 248, 245, 0.95);
 
-  /* Secondary */
-  --color-secondary-900: #3A3650;
-  --color-secondary-700: #6E6A88;
-  --color-secondary-500: #B8B4CC;
-  --color-secondary-300: #E4E2F0;
-  --color-secondary-100: #F5F4FA;
+  /* Deep Charcoal Typography (Never harsh black) */
+  --text-primary: #1A1A1E;
+  --text-secondary: #52525B;
+  --text-muted: #71717A;
+  --text-dim: #A1A1AA;
 
-  /* Grey */
-  --color-grey-900: #0D0D1A;
-  --color-grey-700: #2E2C4A;
-  --color-grey-500: #5C5A78;
-  --color-grey-300: #C2C0D4;
-  --color-grey-100: #F0EFFC;
-  --color-grey-0:   #FFFFFF;
+  /* Sophisticated Pastel Accents */
+  --pastel-sage-bg: #EAF2EC;
+  --pastel-sage-text: #2D5A3C;
+  --pastel-sage-border: rgba(45, 90, 60, 0.15);
 
-  /* Neutral */
-  --color-neutral-900: #212529;
-  --color-neutral-700: #495057;
-  --color-neutral-600: #6C757D;
-  --color-neutral-400: #CED4DA;
-  --color-neutral-300: #DEE2E6;
-  --color-neutral-200: #E9ECEF;
-  --color-neutral-100: #F8F9FA;
+  --pastel-sand-bg: #FAF0E6;
+  --pastel-sand-text: #8C593B;
+  --pastel-sand-border: rgba(140, 89, 59, 0.15);
 
-  /* Semantic */
-  --color-success-700: #15803D;
-  --color-success-500: #22C55E;
-  --color-success-100: #DCFCE7;
-  --color-success-50:  #F0FDF4;
+  --pastel-lavender-bg: #F0EDF9;
+  --pastel-lavender-text: #53457A;
+  --pastel-lavender-border: rgba(83, 69, 122, 0.15);
 
-  --color-danger-700: #991B1B;
-  --color-danger-500: #EF4444;
-  --color-danger-100: #FEE2E2;
-  --color-danger-50:  #FEF2F2;
+  --pastel-mint-bg: #E6F5F2;
+  --pastel-mint-text: #246B5F;
+  --pastel-mint-border: rgba(36, 107, 95, 0.15);
 
-  --color-warning-700: #B45309;
-  --color-warning-500: #F59E0B;
-  --color-warning-100: #FEF3C7;
-  --color-warning-50:  #FFFBEB;
+  --pastel-butter-bg: #FCF7E6;
+  --pastel-butter-text: #7A6624;
+  --pastel-butter-border: rgba(122, 102, 36, 0.15);
 
-  --color-bg: var(--color-grey-0);
-  --color-surface: var(--color-neutral-100);
-  --color-text: var(--color-neutral-900);
-  --color-text-muted: var(--color-neutral-600);
-  --color-border: var(--color-neutral-400);
+  /* Button Tokens */
+  --btn-primary-bg: #18181B;
+  --btn-primary-text: #FFFFFF;
+  --btn-primary-island: rgba(255, 255, 255, 0.18);
 
-  --font-heading: 'Inter', sans-serif;
-  --font-body: 'DM Sans', 'Inter', sans-serif;
+  --btn-secondary-bg: #FFFFFF;
+  --btn-secondary-text: #18181B;
+  --btn-secondary-border: rgba(24, 24, 27, 0.08);
+  --btn-secondary-island: rgba(24, 24, 27, 0.06);
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-full: 999px;
+  /* Hairlines & Doppelrand (Double-Bezel) Borders */
+  --bezel-outer-bg: rgba(24, 24, 27, 0.025);
+  --bezel-outer-border: rgba(24, 24, 27, 0.06);
+  --bezel-inner-border: rgba(24, 24, 27, 0.05);
 
-  --shadow-sm: 0 1px 2px rgba(13,13,26,0.06);
-  --shadow-md: 0 4px 12px rgba(13,13,26,0.08);
-  --shadow-lg: 0 12px 32px rgba(13,13,26,0.12);
+  /* Elevation Shadows (Soft ambient, never harsh) */
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.02);
+  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.02), 0 10px 28px rgba(0, 0, 0, 0.04);
+  --shadow-float: 0 8px 30px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
 
-  --transition: 0.2s ease;
+  /* Radii */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Font Families */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Newsreader', Georgia, serif;
+
+  /* Kinetic Timing Physics (Mass and fluid dynamics) */
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --duration-fast: 180ms;
+  --duration-normal: 320ms;
+  --duration-slow: 600ms;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* Base Reset & Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-body {
-  font-family: var(--font-body);
-  color: var(--color-text);
-  background: var(--color-bg);
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-heading);
-  color: var(--color-text);
+body {
+  min-height: 100vh;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
   font-weight: 700;
-  line-height: 1.25;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
-h1 { font-size: 48px; }
-h2 { font-size: 36px; }
-h3 { font-size: 24px; }
+p {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
 
-p { color: var(--color-text-muted); }
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-fluid);
+}
 
-a { color: inherit; text-decoration: none; }
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
 
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
+/* ==========================================================================
+   DOUBLE-BEZEL (DOPPELRAND) ARCHITECTURE
+   Machined nested enclosure pattern for premium physical feel
+   ========================================================================== */
+.double-bezel {
+  background-color: var(--bezel-outer-bg);
+  border: 1px solid var(--bezel-outer-border);
+  border-radius: var(--radius-xl);
+  padding: 6px;
+  transition: transform var(--duration-normal) var(--ease-fluid),
+              border-color var(--duration-normal) var(--ease-fluid),
+              box-shadow var(--duration-normal) var(--ease-fluid);
+}
 
-img { max-width: 100%; display: block; }
+.double-bezel-inner {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--bezel-inner-border);
+  border-radius: calc(var(--radius-xl) - 6px);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   PASTEL TAGS & EYEBROWS
+   ========================================================================== */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background-color: rgba(24, 24, 27, 0.04);
+  border: 1px solid rgba(24, 24, 27, 0.07);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+
+.pastel-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pastel-tag-sage {
+  background-color: var(--pastel-sage-bg);
+  color: var(--pastel-sage-text);
+  border: 1px solid var(--pastel-sage-border);
+}
+
+.pastel-tag-sand {
+  background-color: var(--pastel-sand-bg);
+  color: var(--pastel-sand-text);
+  border: 1px solid var(--pastel-sand-border);
+}
+
+.pastel-tag-lavender {
+  background-color: var(--pastel-lavender-bg);
+  color: var(--pastel-lavender-text);
+  border: 1px solid var(--pastel-lavender-border);
+}
+
+.pastel-tag-mint {
+  background-color: var(--pastel-mint-bg);
+  color: var(--pastel-mint-text);
+  border: 1px solid var(--pastel-mint-border);
+}
+
+.pastel-tag-butter {
+  background-color: var(--pastel-butter-bg);
+  color: var(--pastel-butter-text);
+  border: 1px solid var(--pastel-butter-border);
+}
+
+/* Utility Helpers */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.text-danger { color: #DC2626; }
+.text-xs { font-size: 12px; }
+.text-sm { font-size: 14px; }
+.truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.w-full { width: 100%; }
+.mt-2 { margin-top: 8px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mt-8 { margin-top: 32px; }
+.my-4 { margin-top: 16px; margin-bottom: 16px; }
+.my-6 { margin-top: 24px; margin-bottom: 24px; }
+.py-8 { padding-top: 32px; padding-bottom: 32px; }
+.py-12 { padding-top: 48px; padding-bottom: 48px; }
+.bg-chalk { background-color: var(--bg-chalk); }

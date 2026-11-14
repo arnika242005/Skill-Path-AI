@@ -1,7 +1,7 @@
 {
   "name": "client",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,15 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.2",
-    "axios": "^1.18.1",
-    "framer-motion": "^12.42.2",
-    "openai": "^6.49.0",
+    "firebase": "^13.3.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-icons": "^5.7.0",
-    "react-router-dom": "^7.18.1",
-    "tailwindcss": "^4.3.2"
+    "react-router-dom": "^7.18.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -1,18 +1,40 @@
-import { useNavigate } from 'react-router-dom';
-import Section from '../ui/Section';
-import Button from '../ui/Button';
+import { useNavigate } from "react-router-dom";
+import Button from "../ui/Button";
 
 const CTA = () => {
   const navigate = useNavigate();
 
   return (
-    <Section background="primary" className="cta">
-      <h2>Ready to find your income path?</h2>
-      <p>Answer a few quick questions and get a personalized roadmap in minutes.</p>
-      <Button size="lg" variant="secondary" onClick={() => navigate('/assessment')}>
-        Start Discovery
-      </Button>
-    </Section>
+    <section className="section-padded">
+      <div className="section-wrap">
+        <div className="cta-bezel double-bezel">
+          <div className="double-bezel-inner cta-inner text-center">
+            <span className="eyebrow-pill">Start Your Journey</span>
+            <h2 className="cta-title">Ready to discover your path?</h2>
+            <p className="cta-lead">
+              Answer 13 quick questions about your schedule, current skills, and
+              budget to generate your tailored 5-step roadmap.
+            </p>
+
+            <div className="cta-action-center">
+              <Button
+                size="lg"
+                variant="primary"
+                onClick={() => navigate("/assessment")}
+                className="cta-btn"
+              >
+                <span>Launch Assessment Now</span>
+                <span className="btn-icon-island">↗</span>
+              </Button>
+            </div>
+
+            <span className="cta-meta">
+              Free to use · No credit card required · Instant recommendations
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

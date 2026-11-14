@@ -1,21 +1,19 @@
-const Assessment = require('../models/Assessment');
 const { getRecommendations } = require('../services/aiService');
 
 const submitAssessment = async (req, res) => {
   try {
     const { answers } = req.body;
 
-    // Save assessment only if logged in; guests still get recommendations
-    let assessment = null;
-    if (req.user) {
-      assessment = await Assessment.create({ user: req.user._id, answers });
+    if (!answers || typeof answers !== 'object') {
+      return res.status(400).json({ message: 'Valid answers object is required' });
     }
 
     const recommendations = await getRecommendations(answers);
 
-    res.json({ assessmentId: assessment?._id || null, recommendations });
+    res.json({ recommendations });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Assessment error:', err.message);
+    res.status(500).json({ message: err.message || 'Failed to generate recommendations' });
   }
 };
 

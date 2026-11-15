@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Button from "../ui/Button";
+import BrandLogo from "../ui/BrandLogo";
 import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
@@ -28,11 +29,8 @@ const Navbar = () => {
       <header className="navbar-floating-wrapper">
         <div className="navbar-floating-island">
           {/* Brand Logo */}
-          <Link to="/" className="navbar-logo-link">
-            <span className="logo-symbol">✦</span>
-            <span className="logo-wordmark">
-              SkillPath<span className="logo-ai-accent">AI</span>
-            </span>
+          <Link to="/" className="navbar-logo-link" aria-label="SkillPath AI Home">
+            <BrandLogo size={26} />
           </Link>
 
           {/* Center Links (Desktop) */}

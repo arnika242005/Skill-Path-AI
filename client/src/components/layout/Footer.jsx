@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BrandLogo from "../ui/BrandLogo";
 
 const Footer = () => {
   return (
@@ -7,11 +8,8 @@ const Footer = () => {
         <div className="footer-grid">
           {/* Brand Info */}
           <div className="footer-brand-col">
-            <Link to="/" className="footer-logo">
-              <span className="logo-symbol">✦</span>
-              <span>
-                SkillPath<span className="logo-ai-accent">AI</span>
-              </span>
+            <Link to="/" className="footer-logo" aria-label="SkillPath AI Home">
+              <BrandLogo size={24} />
             </Link>
             <p className="footer-tagline">
               Discover realistic, high-leverage income paths and small business

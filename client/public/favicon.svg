@@ -1,33 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#222226" />
-      <stop offset="100%" stop-color="#111113" />
-    </linearGradient>
-    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6EE7B7" />
-      <stop offset="100%" stop-color="#34D399" />
+    <linearGradient id="spBrandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#059669" />
     </linearGradient>
   </defs>
 
-  <!-- Squircle Base with Machined Hairline -->
+  <!-- Modern Matte Titanium Squircle -->
+  <rect width="32" height="32" rx="7.5" fill="#121316" />
   <rect
-    x="1"
-    y="1"
-    width="30"
-    height="30"
-    rx="8"
-    fill="url(#bgGrad)"
-    stroke="rgba(255, 255, 255, 0.14)"
-    stroke-width="1.2"
+    x="0.75"
+    y="0.75"
+    width="30.5"
+    height="30.5"
+    rx="6.75"
+    fill="none"
+    stroke="rgba(255, 255, 255, 0.12)"
+    stroke-width="1.5"
   />
 
-  <!-- Four-Point Path Sparkle (North Star) -->
+  <!-- Geometric "S" Path (Monoline Trajectory) -->
   <path
-    d="M16 6.5 C16 11.2 11.2 16 6.5 16 C11.2 16 16 20.8 16 25.5 C16 20.8 20.8 16 25.5 16 C20.8 16 16 11.2 16 6.5 Z"
-    fill="url(#starGrad)"
+    d="M21.5 10.5 C21.5 7.8 19 6.2 16 6.2 C12 6.2 9.5 8.5 9.5 11.8 C9.5 16.2 22.5 15.2 22.5 19.8 C22.5 23.2 20 25.8 16 25.8 C12 25.8 9.8 23.8 9.8 21.2"
+    fill="none"
+    stroke="url(#spBrandGrad)"
+    stroke-width="3.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
   />
-
-  <!-- Subtle Guidance Satellite Dot -->
-  <circle cx="23.5" cy="8.5" r="2" fill="#FDE047" opacity="0.95" />
 </svg>

@@ -46,3 +46,4 @@ const BrandLogo = ({ size = 26, iconOnly = false }) => {
 };
 
 export default BrandLogo;
+

@@ -12,6 +12,11 @@
       "sourceType": "github",
       "skillPath": "skills/soft-skill/SKILL.md",
       "computedHash": "35d686a6100bce47b3391e57ff69b3c5f77635728fafbd664109fbb6923f41f1"
+    },
+    "academic-report-generator-skill": {
+      "source": "yishitys/academic-report-generator-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md"
     }
   }
 }
